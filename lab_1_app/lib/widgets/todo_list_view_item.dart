@@ -12,8 +12,7 @@ class ToDoListViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16), color: Color(0xff5b9ee1)),
+      color: Color(0xff5b9ee1),
       child: Row(
         children: [
           Expanded(

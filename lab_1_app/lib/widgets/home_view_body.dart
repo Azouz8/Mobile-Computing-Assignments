@@ -69,19 +69,43 @@ class HomeViewBody extends StatelessWidget {
                   SliverFillRemaining(
                     child: cubit.todoList.isEmpty
                         ? NoTodosWidget()
-                        : ListView.separated(
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) => ToDoListViewItem(
-                              todo: cubit.todoList[index],
-                              onChanged: (p0) {
-                                cubit.removeTodo(index: index);
-                              },
+                        : Align(
+                            alignment: Alignment.topCenter,
+                            child: ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                              reverse: true,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) => ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Dismissible(
+                                  key: Key(cubit.todoList[index].toString()),
+                                  onDismissed: (direction) =>
+                                      cubit.removeTodo(index: index),
+                                  direction: DismissDirection.endToStart,
+                                  background: Container(
+                                    color: Colors.red,
+                                    alignment: Alignment.centerRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 16),
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  child: ToDoListViewItem(
+                                    todo: cubit.todoList[index],
+                                    onChanged: (p0) {
+                                      cubit.removeTodo(index: index);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              itemCount: cubit.todoList.length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      SizedBox(height: 8),
                             ),
-                            itemCount: cubit.todoList.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) =>
-                                    SizedBox(height: 8),
                           ),
                   ),
                 ],
@@ -93,5 +117,3 @@ class HomeViewBody extends StatelessWidget {
     );
   }
 }
-
-
